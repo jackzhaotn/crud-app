@@ -9,7 +9,8 @@ db = SQLAlchemy(app)
 
 class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(300), nullable=False)
+    name = db.Column(db.String(300), nullable=False)
+    qty = db.Column(db.Integer, nullable=False)
 
     def __rep__(self):
         return '<Item %r>' % self.id
@@ -17,8 +18,9 @@ class Inventory(db.Model):
 @app.route('/', methods=['POST','GET'])
 def home():
     if request.method == 'POST':
-        item_content = request.form['content']
-        new_item = Inventory(content=item_content)
+        item_name = request.form['name']
+        item_qty = request.form['qty']
+        new_item = Inventory(name=item_name, qty=item_qty)
 
         try:
             db.session.add(new_item)
@@ -47,7 +49,8 @@ def update(id):
     item = Inventory.query.get_or_404(id)
 
     if request.method == 'POST':
-        item.content = request.form['content']
+        item.name = request.form['name']
+        item.qty = request.form['qty']
 
         try:
             db.session.commit()
