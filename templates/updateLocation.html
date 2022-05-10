@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventory Manager</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="content">
+    <h1>Update Location</h1>
+    <form action="/updateLocation/{{location.location_id}}" method="POST">
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Location</label>
+                    <input type="text" name="location_name" id="location_name" placeholder="Enter Location Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Add Location">
+                </div>
+            </div>
+        </div>    
+    </form>
+</div>
+
+{% endblock %}

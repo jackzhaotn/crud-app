@@ -12,41 +12,34 @@
     {% if items|length < 1  %}
     
     <h4>There are no items. Create one below!</h4>
-    <form action="/" method="POST">
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Item</label>
-                    <input type="text" name="name" id="name" placeholder="Enter Item Name">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="qty">Quantity</label>
-                    <input type="number" name="qty" id="qty" placeholder="Enter Quantity">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="submit" value="Add Item">
-                </div>
-            </div>
-        </div>    
-    </form>
+
     {% else %}
     <h4>Add an item to the inventory below!</h4>
+
+    {% endif %}
     <form action="/" method="POST">
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Item</label>
-                    <input type="text" name="name" id="name" placeholder="Enter Item Name">
+                    <label for="item_name">Item</label>
+                    <input type="text" name="item_name" id="item_name" placeholder="Enter Item Name">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="qty">Quantity</label>
-                    <input type="number" name="qty" id="qty" placeholder="Enter Quantity">
+                    <label for="item_qty">Quantity</label>
+                    <input type="number" name="item_qty" id="item_qty" placeholder="Enter Quantity">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="location_id">Location</label>
+                    <select id="location" class="form-control" name="location">
+                        <option selected value="">Choose...</option>
+                        {% for location in locations %}
+                        <option value="{{location.location_id}}">{{location.location_name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
@@ -56,24 +49,73 @@
             </div>
         </div>    
     </form>
-    <table>
-        <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Actions</th>
-        </tr>
+    
+    {% if items|length > 0  %}
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
+        <thead> 
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
         {% for item in items %}
-        <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.qty }}</td>
-            <td>
-                <a href="delete/{{item.id}}">Delete</a> <br>
-                <a href="update/{{item.id}}">Update</a>
-            </td>
+        <tr >
+            <tbody >
+                <td text-align="center" >{{ item.item_id }}</td>
+                <td>{{ item.item_qty }}</td>
+                <td>{{ item.location.location_name }}</td>
+                <td>
+                    <a href="delete/{{item.item_id}}">Delete</a> <br>
+                    <a href="update/{{item.item_id}}">Update</a>
+                </td>
+            </tbody>
+            
         </tr>
         {% endfor %}
     </table>
     {% endif %}
+
+    <h4>Add an location below!</h4>
+    <form action="/" method="POST">
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Location</label>
+                    <input type="text" name="location_name" id="location_name" placeholder="Enter Location Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="submit" value="Add Location">
+                </div>
+            </div>
+        </div>    
+    </form>
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        
+
+        {% for location in locations %}
+        <tbody>
+            <tr>
+                <td>{{ location.location_name }}</td>
+                <td>
+                    <a href="../updateLocation/{{location.location_id}}">Update</a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}    
+    </table>
+
+
+    
 
 {% endblock %}

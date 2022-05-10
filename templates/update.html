@@ -12,14 +12,25 @@
         <div class="form-row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Item Name</label>
-                    <input type="text" name="name" id="name" placeholder="Enter Item Name">
+                    <label for="item_name">Item Name</label>
+                    <input type="text" name="item_name" id="item_name" placeholder="Enter Item Name">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="qty">Item Name</label>
-                    <input type="number" name="qty" id="qty" placceholder="Enter Quantity">
+                    <label for="item_qty">Item Name</label>
+                    <input type="number" name="item_qty" id="item_qty" placeholder="Enter Quantity">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="location_id">Location</label>
+                    <select id="location" class="form-control" name="location">
+                        <option selected value="">Choose...</option>
+                        {% for location in locations%}
+                        <option value="{{location.location_id}}">{{location.location_id}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
@@ -27,7 +38,7 @@
                     <input type="submit" value="Add Item">
                 </div>
             </div>
-        </div
+        </div>
     </form>
 </div>
 
