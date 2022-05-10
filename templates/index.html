@@ -6,6 +6,33 @@
 
 {% block body %}
 
-    <p> Hey flask </p>
+    {% if items|length < 1  %}
+    <h4>There are no items. Create one below!</h4>
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Item">
+    </form>
+    {% else %}
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Item">
+    </form>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.content }}</td>
+            <td>
+                <a href="delete/{{item.id}}">Delete</a> <br>
+                <a href="update/{{item.id}}">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 
 {% endblock %}
