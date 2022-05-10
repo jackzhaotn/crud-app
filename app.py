@@ -76,9 +76,9 @@ def update(item_id):
     item = Inventory.query.get_or_404(item_id)
 
     if request.method == 'POST':
-        item.item_name = request.form['item_name']
+        item.item_id = request.form['item_name']
         item.item_qty = request.form['item_qty']
-        item.location = request.form['location']
+        item.location_id = request.form['location']
 
         try:
             db.session.commit()
@@ -87,7 +87,8 @@ def update(item_id):
             return 'There was an issue while updating that task'
 
     else:
-        return render_template('update.html', item=item)
+        locations = Location.query.all()
+        return render_template('update.html', item=item, locations=locations)
 
 @app.route('/deleteLocation/<string:location_id>')
 def deleteLocation(location_id):
